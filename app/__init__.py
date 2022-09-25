@@ -13,7 +13,7 @@ app = Flask(__name__)
 @app.route('/', methods=['GET'])
 @catch_errors
 def home():
-    return 'hello world 🎅'
+    return 'hello world 🦄'
 
 @app.route('/write', methods=['POST'])
 @catch_errors
