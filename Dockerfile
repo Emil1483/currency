@@ -10,4 +10,6 @@ WORKDIR /app
 
 EXPOSE 80
 
-ENTRYPOINT ["./gunicorn.sh"]
+CMD ["/bin/bash"]
+
+ENTRYPOINT gunicorn -w 4 app:app -b 0.0.0.0:80
