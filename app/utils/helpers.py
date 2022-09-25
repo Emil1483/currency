@@ -30,7 +30,7 @@ def assert_extension(filename, required_extension):
 read_json_cache = {}
 
 
-def read_json(file, fallback=None, cache_timeout=None):
+def read_json(file, fallback=None, cache_timeout=None, mpath=None):
     assert_extension(file, '.json')
 
     if cache_timeout and file in read_json_cache:
@@ -38,16 +38,18 @@ def read_json(file, fallback=None, cache_timeout=None):
         age = time.time() - timestamp
         if age < cache_timeout:
             return cache
+    
+    p = mpath or path()
 
-    if os.path.exists(f'{path()}/{file}'):
+    if os.path.exists(f'{p}/{file}'):
         def read():
-            with open(f'{path()}/{file}', 'r') as s:
+            with open(f'{p}/{file}', 'r') as s:
                 result = json.load(s)
                 read_json_cache[file] = result, time.time()
                 return result
         return retry(read, fallback=fallback)
 
-    with open(f'{path()}/{file}', 'w') as s:
+    with open(f'{p}/{file}', 'w') as s:
         mdict = fallback if fallback is not None else {}
         json.dump(mdict, s, indent=4)
         return mdict

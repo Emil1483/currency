@@ -1,3 +1,4 @@
+import json
 import sys
 
 from flask import Flask, request
@@ -5,11 +6,11 @@ from flask import Flask, request
 sys.path.insert(0, '../')
 
 from app.utils.catch_errors import catch_errors
-from app.utils.helpers import path, write_json
+from app.utils.helpers import path, read_json, write_json
 
 app = Flask(__name__)
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 @catch_errors
 def home():
     return 'hello world 🎅'
@@ -17,9 +18,13 @@ def home():
 @app.route('/write', methods=['POST'])
 @catch_errors
 def write():
-    mpath = path(__file__)
-    write_json('file.json', request.json, mpath=f'{mpath}/data')
+    write_json('data/file.json', request.json, mpath=path(__file__))
     return request.json
+
+@app.route('/read', methods=['GET'])
+@catch_errors
+def read():
+    return json.dumps(read_json('data/file.json', mpath=path(__file__)))
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=8080)
