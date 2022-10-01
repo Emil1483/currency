@@ -12,4 +12,4 @@ EXPOSE 5000
 
 CMD ["/bin/bash"]
 
-ENTRYPOINT gunicorn -w 4 -b 0.0.0.0:5000 --certfile /etc/letsencrypt/live/currency.djupvik.dev/fullchain.pem --keyfile /etc/letsencrypt/live/horoscope.wesselhuising.nl/privkey.pem app:app
+ENTRYPOINT gunicorn -w 4 -b 0.0.0.0:5000 --certfile /etc/letsencrypt/live/currency.djupvik.dev/fullchain.pem --keyfile /etc/letsencrypt/live/currency.djupvik.dev/privkey.pem app:app
