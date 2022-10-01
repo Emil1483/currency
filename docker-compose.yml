@@ -3,6 +3,7 @@ services:
   currency:
     build: .
     ports:
-      - "80:80"
+      - "443:5000"
     volumes:
       - ./app/data:/app/app/data
+      - /etc/letsencrypt:/etc/letsencrypt
