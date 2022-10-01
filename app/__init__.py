@@ -2,6 +2,7 @@ import json
 import sys
 
 from flask import Flask, request
+from flask_talisman import Talisman
 
 sys.path.insert(0, '../')
 
@@ -9,11 +10,12 @@ from app.utils.catch_errors import catch_errors
 from app.utils.helpers import path, read_json, write_json
 
 app = Flask(__name__)
+Talisman(app)
 
 @app.route('/', methods=['GET'])
 @catch_errors
 def home():
-    return 'hello world 🦄'
+    return 'hello world 🍕'
 
 @app.route('/write', methods=['POST'])
 @catch_errors
