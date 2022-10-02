@@ -1,18 +1,17 @@
-import json
-import os
 import sys
 
 from dotenv import load_dotenv
-from flask import Flask, request
+from flask import Flask
 from flask_talisman import Talisman
 
 sys.path.insert(0, '../')
 
 from app.utils.catch_errors import catch_errors
-from app.utils.helpers import path, read_json, write_json
+from app.utils.helpers import env_is_true
+from app.utils.xe import fetch_rates
 
 load_dotenv()
-prod = os.environ.get('PROD', default='True') in ('True', '1')
+prod = env_is_true('PROD')
 
 app = Flask(__name__)
 if prod: Talisman(app)
@@ -22,16 +21,10 @@ if prod: Talisman(app)
 def home():
     return 'hello world 👏'
 
-@app.route('/write', methods=['POST'])
+@app.route('/rates', methods=['GET'])
 @catch_errors
-def write():
-    write_json('data/file.json', request.json, mpath=path(__file__))
-    return request.json
-
-@app.route('/read', methods=['GET'])
-@catch_errors
-def read():
-    return json.dumps(read_json('data/file.json', mpath=path(__file__)))
+def rates():
+    return fetch_rates()
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=8080)
