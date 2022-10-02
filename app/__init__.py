@@ -1,6 +1,8 @@
 import json
+import os
 import sys
 
+from dotenv import load_dotenv
 from flask import Flask, request
 from flask_talisman import Talisman
 
@@ -9,8 +11,11 @@ sys.path.insert(0, '../')
 from app.utils.catch_errors import catch_errors
 from app.utils.helpers import path, read_json, write_json
 
+load_dotenv()
+prod = os.environ.get('PROD', default='True') in ('True', '1')
+
 app = Flask(__name__)
-Talisman(app)
+if prod: Talisman(app)
 
 @app.route('/', methods=['GET'])
 @catch_errors
