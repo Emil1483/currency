@@ -19,7 +19,7 @@ if prod: Talisman(app)
 @app.route('/', methods=['GET'])
 @catch_errors
 def home():
-    return 'hello world 👏'
+    return 'Hello World 📦'
 
 @app.route('/rates', methods=['GET'])
 @catch_errors

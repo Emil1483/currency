@@ -32,6 +32,6 @@ def catch_errors(endpoint):
         
         except Exception as e:
             print(traceback.format_exc())
-            return str(e), 500
+            return traceback.format_exc(), 500
 
     return wrapper

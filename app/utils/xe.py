@@ -34,11 +34,17 @@ def fetch_auth():
 
     HAS_CHROME_DRIVER = env_is_true('HAS_CHROME_DRIVER', default=False)
 
-    driver = webdriver.Chrome(
-        ChromeDriverManager().install() if not HAS_CHROME_DRIVER else None,
-        desired_capabilities=capabilities,
-        options=options
-    )
+    if HAS_CHROME_DRIVER:
+        driver = webdriver.Chrome(
+            desired_capabilities=capabilities,
+            options=options
+        )
+    else:
+        driver = webdriver.Chrome(
+            ChromeDriverManager().install(),
+            desired_capabilities=capabilities,
+            options=options
+        )
 
     driver.get('http://www.xe.com')
 

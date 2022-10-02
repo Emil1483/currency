@@ -27,7 +27,7 @@ def data_path():
     while not directory.endswith('app'):
         directory = directory[:-1]
     
-    directory += '\\data'
+    directory += '/data'
 
     return directory
 
